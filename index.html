@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <title>The bind() of this.hack</title>
+  </head>
+  <body>
+    <section class="game-intro">
+      <!-- <audio
+        class="music"
+        controls
+        autoplay
+        src="/musics/The Binding of Isaac Rebirth OST - Death theme.mp3"
+        type="audio/mpeg"
+      ></audio> -->
+
+      <div class="game-intro-text">
+        <h1>The bind() of this.hack</h1>
+        <p>Mom tried to kill you and you hid in the basement.</p>
+        <p>Only to realise it is filled with monsters that want to kill you.</p>
+        <p>Will you survive?</p>
+      </div>
+    </section>
+    <section class="goal">
+      <p>Beware, if one monster touches you, you are dead</p>
+      <p>
+        Kill the highest number of monster in 2 minutes if you want to survive
+      </p>
+
+      <div class="controllers">
+        <div class="controllers-text">
+          <p>Use the arrows keys to navigate</p>
+          <p>Use the space bar to shoot tears</p>
+        </div>
+        <img src="./images/controllers-keys.png" alt="" class="keys-img" />
+      </div>
+
+      <button id="start-button">Start Game</button>
+    </section>
+
+    <div id="game-board"></div>
+
+    <script type="module" src="js/components.js"></script>
+    <script type="module" src="js/index.js"></script>
+  </body>
+</html>
