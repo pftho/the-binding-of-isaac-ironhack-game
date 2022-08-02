@@ -25,9 +25,30 @@ const gameArea = {
     const canvasDiv = document.querySelector("#game-board"); // create the canvas
     canvasDiv.appendChild(this.canvas); // put canvas on the DOM
 
-    //Calling other functions
     this.drawBackground();
+    this.initComponents();
 
+    this.intervalId = setInterval(() => {
+      this.updateGame();
+    }, 60);
+  },
+
+  //UPDATE GAME
+  updateGame: function () {
+    this.clear();
+    this.drawBackground();
+    this.drawComponents();
+    this.displayScore();
+    this.newPos();
+  },
+
+  // CLEAR (so we can see the new updated version)
+  clear: function () {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  },
+
+  //INIT COMPONENTS
+  initComponents: function () {
     //init component
     const isaac = new Player("/images/isaac.png", 1, 1, 500, 350, 50, 50);
     const meetSavage = new Player(
@@ -36,24 +57,50 @@ const gameArea = {
       1,
       400,
       200,
-      50,
-      50
+      80,
+      80
+    );
+    const zombiRider = new Player(
+      "/images/monster2.png",
+      1,
+      1,
+      200,
+      100,
+      70,
+      85
+    );
+
+    const romanticGost = new Player(
+      "/images/monster3.png",
+      1,
+      1,
+      300,
+      500,
+      80,
+      85
+    );
+    const bloodyFairy = new Player(
+      "/images/monster4.png",
+      1,
+      1,
+      600,
+      400,
+      85,
+      80
     );
 
     this.componentsArray.push(isaac);
     this.componentsArray.push(meetSavage);
+    this.componentsArray.push(zombiRider);
+    this.componentsArray.push(romanticGost);
+    this.componentsArray.push(bloodyFairy);
 
-    //console.log(this.components);
-
-    this.intervalId = setInterval(() => {
-      this.updateGame();
-    }, 30);
+    return isaac;
   },
 
-  //UPDATE GAME
-  updateGame: function () {
-    // Check position for death and kill
+  //DRAW COMPONENTS
 
+  drawComponents: function () {
     this.componentsArray.forEach((component) => {
       gameArea.ctx.drawImage(
         component.image,
@@ -63,8 +110,20 @@ const gameArea = {
         component.height
       );
     });
-    this.displayScore();
   },
+
+  //UPDATE PLAYER POSITION
+
+  updatePlayerSpeed() {
+    document.addEventListener("keydown", (e) => console.log(Player.speedX));
+  },
+
+  newPlayerPos() {
+    this.x += this.speedX; // this.x = this.x + speedX
+    this.y += this.speedY; // this.y = this.y + speedY
+  },
+
+  //LISTEN FOR AN EVENT TO UPDATE THE SPEED
 
   // GAME MUSIC
 
@@ -101,7 +160,7 @@ const gameArea = {
   displayScore: function () {
     this.ctx.font = "18px serif";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(`Score: 6576`, 100, 100);
+    this.ctx.fillText(`Score: 6576`, 850, 100);
   },
 };
 
@@ -109,5 +168,7 @@ window.onload = () => {
   // document.getElementById("start-button").onclick = () => {
   clearSplash();
   gameArea.start();
+  gameArea.updatePlayerSpeed();
+
   // };
 };

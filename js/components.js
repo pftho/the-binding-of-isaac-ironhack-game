@@ -10,10 +10,22 @@ export class Component {
     this.speedY = 0;
   }
 
-  newPos() {
-    this.x += this.speedX; // this.x = this.x + speedX
-    this.y += this.speedY; // this.y = this.y + speedY
+  left() {
+    return this.x;
   }
+
+  right() {
+    return this.x + this.width;
+  }
+
+  top() {
+    return this.y;
+  }
+  bottom() {
+    return this.y + this.height;
+  }
+
+
 }
 
 export class Player extends Component {
