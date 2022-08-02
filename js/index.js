@@ -1,174 +1,126 @@
-import { Component, Player } from "./components.js";
-// HIDE SPLASH
+import { Player } from "./player.js";
+import { Monster } from "./monster.js";
+import { Game } from "./game.js";
 
-const clearSplash = () => {
-  const gameIntro = document.querySelector(".game-intro");
-  const gameGoal = document.querySelector(".goal");
-  const canvasDiv = document.querySelector("#game-board"); // create the canvas
-  gameIntro.style.display = "none";
-  gameGoal.style.display = "none";
-  canvasDiv.style.display = "flex";
-};
+// DEFINE GAME
+let currentGame;
+let currentPlayer;
 
-const gameArea = {
-  //CANVAS
-  canvas: document.createElement("canvas"),
-  componentsArray: [],
+// LISTEN FOR ARROW CLICK TO GET PLAYER TO MOVE
 
-  start: function () {
-    //set up the canvas
-    this.canvas.width = 1000; // set size of canvas
-    this.canvas.height = 700; // set size of canvas
-    this.ctx = this.canvas.getContext("2d"); // Initialize context
+document.addEventListener("keydown", (e) => {
+  let playerMoves = e.keyCode;
+  currentGame.player.movePlayer(playerMoves);
+});
 
-    //append canvas to the DOM
-    const canvasDiv = document.querySelector("#game-board"); // create the canvas
-    canvasDiv.appendChild(this.canvas); // put canvas on the DOM
+//SET UP CANVAS AND APPEND TO THE DOM
+const canvasDiv = document.querySelector("#game-board");
+const canvas = document.createElement("canvas");
+canvasDiv.appendChild(canvas); // put canvas on the DOM
+const canvasWidth = 1000; // set size of canvas
+canvas.width = canvasWidth;
+const canvasHeight = 600; // set size of canvas
+canvas.height = canvasHeight;
+const ctx = canvas.getContext("2d"); // Initialize context
 
-    this.drawBackground();
-    this.initComponents();
-
-    this.intervalId = setInterval(() => {
-      this.updateGame();
-    }, 60);
-  },
-
-  //UPDATE GAME
-  updateGame: function () {
-    this.clear();
-    this.drawBackground();
-    this.drawComponents();
-    this.displayScore();
-    this.newPos();
-  },
-
-  // CLEAR (so we can see the new updated version)
-  clear: function () {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  },
-
-  //INIT COMPONENTS
-  initComponents: function () {
-    //init component
-    const isaac = new Player("/images/isaac.png", 1, 1, 500, 350, 50, 50);
-    const meetSavage = new Player(
-      "/images/monster1.png",
-      1,
-      1,
-      400,
-      200,
-      80,
-      80
-    );
-    const zombiRider = new Player(
-      "/images/monster2.png",
-      1,
-      1,
-      200,
-      100,
-      70,
-      85
-    );
-
-    const romanticGost = new Player(
-      "/images/monster3.png",
-      1,
-      1,
-      300,
-      500,
-      80,
-      85
-    );
-    const bloodyFairy = new Player(
-      "/images/monster4.png",
-      1,
-      1,
-      600,
-      400,
-      85,
-      80
-    );
-
-    this.componentsArray.push(isaac);
-    this.componentsArray.push(meetSavage);
-    this.componentsArray.push(zombiRider);
-    this.componentsArray.push(romanticGost);
-    this.componentsArray.push(bloodyFairy);
-
-    return isaac;
-  },
-
-  //DRAW COMPONENTS
-
-  drawComponents: function () {
-    this.componentsArray.forEach((component) => {
-      gameArea.ctx.drawImage(
-        component.image,
-        component.x,
-        component.y,
-        component.width,
-        component.height
-      );
-    });
-  },
-
-  //UPDATE PLAYER POSITION
-
-  updatePlayerSpeed() {
-    document.addEventListener("keydown", (e) => console.log(Player.speedX));
-  },
-
-  newPlayerPos() {
-    this.x += this.speedX; // this.x = this.x + speedX
-    this.y += this.speedY; // this.y = this.y + speedY
-  },
-
-  //LISTEN FOR AN EVENT TO UPDATE THE SPEED
-
-  // GAME MUSIC
-
-  playGameMusic: function () {
-    this.gameMusic = document.createElement("audio");
-    this.canvas.appendChild(this.gameMusic); // put canvas on the DOM
-    this.gameMusic.src =
-      "/musics/The Binding of Isaac Afterbirth+ OST Delirium.mp3";
-    this.gameMusic.play();
-  },
-
-  stopMusic: function () {
-    this.gameMusic.stop();
-  },
-
-  //BACKGROUND
-
-  drawBackground: function () {
-    //  display canvas background
-    this.background = new Image();
-    this.background.src = "./images/basement.png";
-    this.background.addEventListener("load", () => {
-      this.ctx.drawImage(
-        this.background,
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height
-      );
-    });
-  },
-
-  //SCORE
-  displayScore: function () {
-    this.ctx.font = "18px serif";
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText(`Score: 6576`, 850, 100);
-  },
-};
+// LISTEN FOR START GAME BUTTON PRESS = FUNCTION START
 
 window.onload = () => {
   // document.getElementById("start-button").onclick = () => {
-  clearSplash();
-  gameArea.start();
-  gameArea.updatePlayerSpeed();
-
+  startGame();
   // };
 };
+
+// START FUNCTION TRIGGERED WHEN BUTTON PRESSED
+
+function startGame() {
+  // HIDE SPLASH & SHOW CANVAS DIV
+  const gameIntro = document.querySelector(".game-intro");
+  const gameGoal = document.querySelector(".goal");
+  const canvasDiv = document.querySelector("#game-board");
+  gameIntro.style.display = "none";
+  gameGoal.style.display = "none";
+  canvasDiv.style.display = "flex";
+
+  //DRAW BACKGROUND
+  drawBackground();
+
+  // INITITATE GAME, PLAYER
+  //init game
+  currentGame = new Game();
+
+  // init player
+  currentPlayer = new Player("/images/isaac.png", 400, 350, 50, 50);
+  currentGame.player = currentPlayer;
+
+  // init monsters
+  generateRandomMonsters();
+
+  //PLAY MUSIC
+  //playGameMusic();
+
+  //UPDATE GAME
+  updateGame();
+  setInterval(() => {
+    updateGame();
+  }, 200);
+}
+
+//DRAWING UPDATED THINGS
+function updateGame() {
+  drawBackground();
+  currentGame.player.drawPlayer(ctx);
+  currentGame.monsters.forEach((monster) => monster.drawMonster(ctx));
+  currentGame.displayScore(ctx);
+}
+
+// GAME MUSIC
+function playGameMusic() {
+  const gameMusic = document.createElement("audio");
+  canvas.appendChild(gameMusic); // put canvas on the DOM
+  gameMusic.src = "/musics/The Binding of Isaac Afterbirth+ OST Delirium.mp3";
+  gameMusic.play();
+}
+
+// function stopMusic() {
+//   playGameMusic();
+//   gameMusic.stop();
+// }
+
+//BACKGROUND
+
+function drawBackground() {
+  //  display canvas background
+  const background = new Image();
+  background.src = "./images/basement.png";
+  ctx.drawImage(background, 0, 0, canvasWidth, canvasHeight);
+}
+
+//GENERATE RANDOM MONSTERS
+
+function generateRandomMonster(img, width, height) {
+  const maxX = canvasWidth - width - 45;
+  const minX = 45;
+  const maxY = canvasHeight - height - 45;
+  const minY = 45;
+  return new Monster(
+    img,
+    Math.floor(Math.random() * (maxX - minX + 1) + minX),
+    Math.floor(Math.random() * (maxY - minY + 1) + minY),
+    width,
+    height
+  );
+}
+
+function generateRandomMonsters() {
+  const meetSavage = generateRandomMonster("images/monster1.png", 80, 85);
+  const zombiRider = generateRandomMonster("images/monster2.png", 50, 50);
+  const romanticGost = generateRandomMonster("images/monster3.png", 50, 50);
+  const bloodyFairy = generateRandomMonster("images/monster4.png", 70, 70);
+
+  //push monsters in Game Array
+  currentGame.monsters.push(meetSavage);
+  currentGame.monsters.push(zombiRider);
+  currentGame.monsters.push(romanticGost);
+  currentGame.monsters.push(bloodyFairy);
+}
