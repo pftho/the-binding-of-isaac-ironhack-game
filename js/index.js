@@ -6,13 +6,6 @@ import { Game } from "./game.js";
 let currentGame;
 let currentPlayer;
 
-// LISTEN FOR ARROW CLICK TO GET PLAYER TO MOVE
-
-document.addEventListener("keydown", (e) => {
-  let playerMoves = e.keyCode;
-  currentGame.player.movePlayer(playerMoves);
-});
-
 //SET UP CANVAS AND APPEND TO THE DOM
 const canvasDiv = document.querySelector("#game-board");
 const canvas = document.createElement("canvas");
@@ -49,9 +42,54 @@ function startGame() {
   //init game
   currentGame = new Game();
 
-  // init player
+  // PLAYER
+  //init player
   currentPlayer = new Player("/images/isaac.png", 400, 350, 50, 50);
   currentGame.player = currentPlayer;
+
+  //make player move
+
+  // LISTEN FOR ARROW CLICK TO GET PLAYER TO MOVE
+
+  function handleMove(keyCode) {
+    switch (keyCode) {
+      //LEFT
+      case 37:
+        currentPlayer.speedX = -10;
+        console.log("speedX", currentPlayer.speedX);
+        break;
+
+      //RIGHT
+      case 39:
+        currentPlayer.speedX = 10;
+        console.log("speedX", currentPlayer.speedX);
+        break;
+
+      //UP
+
+      case 38:
+        currentPlayer.speedY = -10;
+        console.log("speedY", currentPlayer.speedY);
+        break;
+
+      //DOWN
+      case 40:
+        currentPlayer.speedY = 10;
+        console.log("speedY", currentPlayer.speedY);
+        break;
+    }
+  }
+
+  document.addEventListener("keyup", (e) => {
+    // makes sure the speed goed back 0
+    currentPlayer.speedX = 0;
+    currentPlayer.speedY = 0;
+  });
+
+  document.addEventListener("keydown", (e) => {
+    let playerMoves = e.keyCode;
+    handleMove(playerMoves);
+  });
 
   // init monsters
   generateRandomMonsters();
@@ -70,6 +108,7 @@ function startGame() {
 function updateGame() {
   drawBackground();
   currentGame.player.drawPlayer(ctx);
+  currentGame.player.newPos();
   currentGame.monsters.forEach((monster) => monster.drawMonster(ctx));
   currentGame.displayScore(ctx);
 }
@@ -113,10 +152,10 @@ function generateRandomMonster(img, width, height) {
 }
 
 function generateRandomMonsters() {
-  const meetSavage = generateRandomMonster("images/monster1.png", 80, 85);
-  const zombiRider = generateRandomMonster("images/monster2.png", 50, 50);
-  const romanticGost = generateRandomMonster("images/monster3.png", 50, 50);
-  const bloodyFairy = generateRandomMonster("images/monster4.png", 70, 70);
+  const meetSavage = generateRandomMonster("images/monster1.png", 80, 80);
+  const zombiRider = generateRandomMonster("images/monster2.png", 50, 60);
+  const romanticGost = generateRandomMonster("images/monster3.png", 60, 60);
+  const bloodyFairy = generateRandomMonster("images/monster4.png", 75, 70);
 
   //push monsters in Game Array
   currentGame.monsters.push(meetSavage);

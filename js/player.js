@@ -6,39 +6,28 @@ export class Player {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.speedX = 0; // controlling the speed on the x axis
+    this.speedY = 0; // controlling the speed on the y axis
   }
 
   drawPlayer(ctx) {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
-  movePlayer(keyCode) {
-    console.log(keyCode);
-    switch (keyCode) {
-      //LEFT
-      case 37:
-        if (this.x > 45) {
-          this.x -= 10;
-        }
-        break;
-      //RIGHT
-      case 39:
-        if (this.x < 45) {
-          this.x += 10;
-        }
-        break;
-      //UP
-      case 38:
-        if (this.y > 25) {
-          this.y -= 10;
-        }
-        break;
-      //DOWN
-      case 40:
-        if (this.y < 25) {
-          this.y += 10;
-        }
-        break;
+  newPos() {
+    console.log(this.x);
+    if (
+      this.x + this.speedX < 1000 - 25 - this.width &&
+      this.x + this.speedX > 25
+    ) {
+      this.x += this.speedX;
+    }
+
+    if (
+      this.y + this.speedY < 600 - 25 - this.height &&
+      this.y + this.speedY > 25
+    ) {
+      this.y += this.speedY;
     }
   }
 }
