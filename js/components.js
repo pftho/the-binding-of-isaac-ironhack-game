@@ -35,12 +35,86 @@ export class Component {
 export class Player extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
-
-}}
+  }
+}
 
 export class Monster extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
+    const maxSpeed = 10;
+    const minSpeed = -10;
+    this.speedX = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); // controlling the speed on the x axis
+    this.speedY = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); // controlling the speed on the y axis
+  }
+
+  newPos() {
+    //   if (
+    //     this.x + this.speedX < rightBorder &&
+    //     this.x + this.speedX > leftBorder
+    //   ) {
+    //     this.x += this.speedX;
+    //   }
+    //   if (
+    //     this.x + this.speedX > rightBorder ||
+    //     this.x + this.speedX < leftBorder
+    //   )
+
+    //   if (
+    //     this.y + this.speedY < bottomBorder &&
+    //     this.y + this.speedY > topBorder
+    //   ) {
+    //     this.y += this.speedY;
+
+    //   }
+
+    //   if (
+    //     this.y + this.speedY > bottomBorder ||
+    //     this.y + this.speedY < topBorder
+    //   ) {
+    //     console.log("contact y");
+    //   }
+    // }
+
+    const rightBorder = 1000 - 25 - this.width;
+    const leftBorder = 25;
+    const topBorder = 25;
+    const bottomBorder = 600 - 25 - this.height;
+
+    //MOVE HORIZONTALY
+    if (
+      this.x + this.speedX < rightBorder &&
+      this.x + this.speedX > leftBorder
+    ) {
+      this.x += this.speedX;
+    }
+
+    // Colision
+    if (
+      this.x + this.speedX > rightBorder ||
+      this.x + this.speedX < leftBorder
+    ) {
+      this.speedX = -this.speedX;
+      this.x += this.speedX;
+    }
+
+    //MOVE VERTICALY
+
+    if (
+      this.y + this.speedY < bottomBorder &&
+      this.y + this.speedY > topBorder
+    ) {
+      this.y += this.speedY;
+    }
+
+    // Colision
+
+    if (
+      this.y + this.speedY > bottomBorder ||
+      this.y + this.speedY < topBorder
+    ) {
+      this.speedY = -this.speedY;
+      this.y += this.speedY;
+    }
   }
 }
 

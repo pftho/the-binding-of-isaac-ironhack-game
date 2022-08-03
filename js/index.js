@@ -97,7 +97,16 @@ function updateGame() {
   currentGame.drawBackground(ctx, canvasWidth, canvasHeight);
   currentGame.player.drawComponent(ctx);
   currentGame.player.newPos();
-  currentGame.monsters.forEach((monster) => monster.drawComponent(ctx));
+  currentGame.monsters.forEach((monster) => {
+    if (currentPlayer.x !== monster.x && currentPlayer.y !== monster.y) {
+      monster.drawComponent(ctx);
+    }
+  });
+  currentGame.monsters.forEach((monster) => {
+    monster.newPos();
+  })
+
+
   currentGame.displayScore(ctx);
 }
 
