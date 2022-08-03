@@ -97,6 +97,7 @@ function updateGame() {
   currentGame.drawBackground(ctx, canvasWidth, canvasHeight);
   currentGame.player.drawComponent(ctx);
   currentGame.player.newPos();
+
   currentGame.monsters.forEach((monster) => {
     if (currentPlayer.x !== monster.x && currentPlayer.y !== monster.y) {
       monster.drawComponent(ctx);
@@ -104,10 +105,15 @@ function updateGame() {
   });
   currentGame.monsters.forEach((monster) => {
     monster.newPos();
-  })
+  });
 
+  if (currentGame.monsters.length < 6) {
+    generateRandomMonsters();
+  }
 
   currentGame.displayScore(ctx);
+
+  currentGame.tears.forEach((tear) => tear.drawComponent(ctx));
 }
 
 //GENERATE RANDOM MONSTERS
@@ -152,7 +158,7 @@ function generateRandomMonsters() {
   for (let i = 0; i < monsterConfig.length; i++) {
     const randomMonsterConfig =
       monsterConfig[Math.floor(Math.random() * monsterConfig.length)];
-    console.log("random monster", randomMonsterConfig);
+    //console.log("random monster", randomMonsterConfig);
 
     let randomMonster = new Monster(
       randomMonsterConfig.img,
@@ -161,8 +167,18 @@ function generateRandomMonsters() {
       randomMonsterConfig.width,
       randomMonsterConfig.height
     );
-    console.log("game array", currentGame.monsters);
+    //console.log("game array", currentGame.monsters);
 
     currentGame.monsters.push(randomMonster);
   }
+}
+
+function generateTears() {
+  const tearConfig = {
+    img: "/images/tear.png",
+    x: currentPlayer.x + x + 3,
+    y: currentPlayer.y + 3,
+    width: 10,
+    height: 10,
+  };
 }

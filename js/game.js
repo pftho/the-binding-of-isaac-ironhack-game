@@ -2,12 +2,13 @@ export class Game {
   constructor() {
     this.player = {};
     this.monsters = [];
+    this.tears = [];
     this.score = 0;
     this.background = new Image();
     this.background.src = "./images/basement.png";
-  //  this.gameMusic = new Audio(
-     // "/musics/The Binding of Isaac Afterbirth+ OST Delirium.mp3"
- //   );
+    //  this.gameMusic = new Audio(
+    // "/musics/The Binding of Isaac Afterbirth+ OST Delirium.mp3"
+    //   );
   }
 
   displayScore(ctx) {

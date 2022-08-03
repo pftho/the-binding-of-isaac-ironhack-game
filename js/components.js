@@ -48,33 +48,6 @@ export class Monster extends Component {
   }
 
   newPos() {
-    //   if (
-    //     this.x + this.speedX < rightBorder &&
-    //     this.x + this.speedX > leftBorder
-    //   ) {
-    //     this.x += this.speedX;
-    //   }
-    //   if (
-    //     this.x + this.speedX > rightBorder ||
-    //     this.x + this.speedX < leftBorder
-    //   )
-
-    //   if (
-    //     this.y + this.speedY < bottomBorder &&
-    //     this.y + this.speedY > topBorder
-    //   ) {
-    //     this.y += this.speedY;
-
-    //   }
-
-    //   if (
-    //     this.y + this.speedY > bottomBorder ||
-    //     this.y + this.speedY < topBorder
-    //   ) {
-    //     console.log("contact y");
-    //   }
-    // }
-
     const rightBorder = 1000 - 25 - this.width;
     const leftBorder = 25;
     const topBorder = 25;
