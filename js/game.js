@@ -3,7 +3,7 @@ export class Game {
     this.player = {};
     this.monsters = [];
     this.tears = [];
-    this.score = 0;
+    this.score = 0; 
     this.background = new Image();
     this.background.src = "./images/basement.png";
     //  this.gameMusic = new Audio(

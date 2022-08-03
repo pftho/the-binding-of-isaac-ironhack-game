@@ -8,6 +8,8 @@ export class Component {
     this.height = height;
     this.speedX = 0; // controlling the speed on the x axis
     this.speedY = 0; // controlling the speed on the y axis
+    this.health = 1;
+    this.damage = 1;
   }
 
   drawComponent(ctx) {
@@ -35,6 +37,7 @@ export class Component {
 export class Player extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
+    this.damage = 0;
   }
 }
 
@@ -48,20 +51,13 @@ export class Monster extends Component {
   }
 
   newPos() {
+    super.newPos() //calling what expists in component
     const rightBorder = 1000 - 25 - this.width;
     const leftBorder = 25;
     const topBorder = 25;
     const bottomBorder = 600 - 25 - this.height;
 
-    //MOVE HORIZONTALY
-    if (
-      this.x + this.speedX < rightBorder &&
-      this.x + this.speedX > leftBorder
-    ) {
-      this.x += this.speedX;
-    }
-
-    // Colision
+    // Collision
     if (
       this.x + this.speedX > rightBorder ||
       this.x + this.speedX < leftBorder
@@ -70,16 +66,7 @@ export class Monster extends Component {
       this.x += this.speedX;
     }
 
-    //MOVE VERTICALY
-
-    if (
-      this.y + this.speedY < bottomBorder &&
-      this.y + this.speedY > topBorder
-    ) {
-      this.y += this.speedY;
-    }
-
-    // Colision
+    // Collision
 
     if (
       this.y + this.speedY > bottomBorder ||
@@ -100,58 +87,30 @@ export class Tears extends Component {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
-  newPos(arr) {
+  newPos(ctx) {
+    super.newPos();
     const rightBorder = 1000 - 25 - this.width;
     const leftBorder = 25;
     const topBorder = 25;
     const bottomBorder = 600 - 25 - this.height;
 
-    console.log("x", this.x);
-    console.log("speed", this.speedX);
-
-    //MOVE HORIZONTALY
-
-
-// document.addEventListener("keydown", e => {
-
-// if(e.keyCode === 39){ 
-
-
   
-// }
 
-// })
-
-    if (
-      this.x + this.speedX < rightBorder &&
-      this.x + this.speedX > leftBorder
-    ) {
-      this.speedX = -10;
-      this.x += this.speedX;
-    }
-
-    // Colision
+    // Collision
     if (
       this.x + this.speedX > rightBorder ||
       this.x + this.speedX < leftBorder
     ) {
+      ctx.clearRect(this.x, this.y, this.width, this.height);
     }
 
-    //MOVE VERTICALY
-
-    if (
-      this.y + this.speedY < bottomBorder &&
-      this.y + this.speedY > topBorder
-    ) {
-      this.y += this.speedY;
-    }
-
-    // Colision
+    // Collision
 
     if (
       this.y + this.speedY > bottomBorder ||
       this.y + this.speedY < topBorder
     ) {
+      ctx.clearRect(this.x, this.y + this.speedY, this.width, this.height);
     }
   }
 }
