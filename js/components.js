@@ -1,4 +1,4 @@
-export class Player {
+export class Component {
   constructor(img, x, y, width, height) {
     this.image = new Image();
     this.image.src = img;
@@ -10,7 +10,7 @@ export class Player {
     this.speedY = 0; // controlling the speed on the y axis
   }
 
-  drawPlayer(ctx) {
+  drawComponent(ctx) {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
@@ -29,5 +29,23 @@ export class Player {
     ) {
       this.y += this.speedY;
     }
+  }
+}
+
+export class Player extends Component {
+  constructor(img, x, y, width, height) {
+    super(img, x, y, width, height);
+
+}}
+
+export class Monster extends Component {
+  constructor(img, x, y, width, height) {
+    super(img, x, y, width, height);
+  }
+}
+
+export class Tears extends Component {
+  constructor(img, x, y, width, height) {
+    super(img, x, y, width, height);
   }
 }

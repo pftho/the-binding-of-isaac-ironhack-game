@@ -1,5 +1,4 @@
-import { Player } from "./player.js";
-import { Monster } from "./monster.js";
+import { Component, Player, Monster, Tears } from "./components.js";
 import { Game } from "./game.js";
 
 // DECLARE GAME & PLAYER TO USE THE CLASSES
@@ -19,13 +18,13 @@ const ctx = canvas.getContext("2d"); // Initialize context
 // LISTEN FOR START GAME BUTTON PRESS = FUNCTION START
 window.onload = () => {
   //document.getElementById("start-button").onclick = () => {
-    startGame();
- // };
+  startGame();
+  // };
 };
 
 // START FUNCTION TRIGGERED WHEN BUTTON PRESSED
 function startGame() {
-  // HIDE SPLASH & SHOW CANVAS 
+  // HIDE SPLASH & SHOW CANVAS
   const gameIntro = document.querySelector(".game-intro");
   const gameGoal = document.querySelector(".goal");
   const canvasDiv = document.querySelector("#game-board");
@@ -41,33 +40,32 @@ function startGame() {
   currentPlayer = new Player("/images/isaac.png", 400, 350, 50, 50);
   currentGame.player = currentPlayer;
 
-
   // DEFINE HOW PLAYER MOVES
   function handleMove(keyCode) {
     switch (keyCode) {
       //LEFT
       case 37:
         currentPlayer.speedX = -10;
-       // console.log("speedX", currentPlayer.speedX);
+        // console.log("speedX", currentPlayer.speedX);
         break;
 
       //RIGHT
       case 39:
         currentPlayer.speedX = 10;
-       // console.log("speedX", currentPlayer.speedX);
+        // console.log("speedX", currentPlayer.speedX);
         break;
 
       //UP
 
       case 38:
         currentPlayer.speedY = -10;
-       // console.log("speedY", currentPlayer.speedY);
+        // console.log("speedY", currentPlayer.speedY);
         break;
 
       //DOWN
       case 40:
         currentPlayer.speedY = 10;
-      //  console.log("speedY", currentPlayer.speedY);
+        //  console.log("speedY", currentPlayer.speedY);
         break;
     }
   }
@@ -84,7 +82,7 @@ function startGame() {
     handleMove(playerMoves);
   });
 
-// GENERATE MONSTERS
+  // GENERATE MONSTERS
   generateRandomMonsters();
 
   //UPDATE GAME
@@ -94,40 +92,68 @@ function startGame() {
   }, 200);
 }
 
-//UPDATING BY DRAWING THE NEW STATES 
+//UPDATING BY DRAWING THE NEW STATES
 function updateGame() {
   currentGame.drawBackground(ctx, canvasWidth, canvasHeight);
-  currentGame.player.drawPlayer(ctx);
+  currentGame.player.drawComponent(ctx);
   currentGame.player.newPos();
-  currentGame.monsters.forEach((monster) => monster.drawMonster(ctx));
+  currentGame.monsters.forEach((monster) => monster.drawComponent(ctx));
   currentGame.displayScore(ctx);
 }
 
 //GENERATE RANDOM MONSTERS
 
-function generateRandomMonster(img, width, height) {
-  const maxX = canvasWidth - width - 45;
-  const minX = 45;
-  const maxY = canvasHeight - height - 45;
-  const minY = 45;
-  return new Monster(
-    img,
-    Math.floor(Math.random() * (maxX - minX + 1) + minX),
-    Math.floor(Math.random() * (maxY - minY + 1) + minY),
-    width,
-    height
-  );
-}
-
 function generateRandomMonsters() {
-  const meetSavage = generateRandomMonster("images/monster1.png", 80, 80);
-  const zombiRider = generateRandomMonster("images/monster2.png", 50, 60);
-  const romanticGost = generateRandomMonster("images/monster3.png", 60, 60);
-  const bloodyFairy = generateRandomMonster("images/monster4.png", 75, 70);
+  const maxX = canvasWidth - 60 - 45;
+  const minX = 45;
+  const maxY = canvasHeight - 60 - 45;
+  const minY = 45;
 
-  //push monsters in Game Array
-  currentGame.monsters.push(meetSavage);
-  currentGame.monsters.push(zombiRider);
-  currentGame.monsters.push(romanticGost);
-  currentGame.monsters.push(bloodyFairy);
+  const monsterConfig = [
+    {
+      img: "images/monster1.png",
+      x: Math.floor(Math.random() * (maxX - minX + 1) + minX),
+      y: Math.floor(Math.random() * (maxY - minY + 1) + minY),
+      width: 80,
+      height: 80,
+    },
+    {
+      img: "images/monster2.png",
+      x: Math.floor(Math.random() * (maxX - minX + 1) + minX),
+      y: Math.floor(Math.random() * (maxY - minY + 1) + minY),
+      width: 50,
+      height: 50,
+    },
+    {
+      img: "images/monster3.png",
+      x: Math.floor(Math.random() * (maxX - minX + 1) + minX),
+      y: Math.floor(Math.random() * (maxY - minY + 1) + minY),
+      width: 60,
+      height: 60,
+    },
+    {
+      img: "images/monster4.png",
+      x: Math.floor(Math.random() * (maxX - minX + 1) + minX),
+      y: Math.floor(Math.random() * (maxY - minY + 1) + minY),
+      width: 75,
+      height: 70,
+    },
+  ];
+
+  for (let i = 0; i < monsterConfig.length; i++) {
+    const randomMonsterConfig =
+      monsterConfig[Math.floor(Math.random() * monsterConfig.length)];
+    console.log("random monster", randomMonsterConfig);
+
+    let randomMonster = new Monster(
+      randomMonsterConfig.img,
+      randomMonsterConfig.x,
+      randomMonsterConfig.y,
+      randomMonsterConfig.width,
+      randomMonsterConfig.height
+    );
+    console.log("game array", currentGame.monsters);
+
+    currentGame.monsters.push(randomMonster);
+  }
 }
