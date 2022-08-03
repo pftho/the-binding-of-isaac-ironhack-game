@@ -41,7 +41,7 @@ function startGame() {
   currentGame.player = currentPlayer;
 
   // DEFINE HOW PLAYER MOVES
-  function handleMove(keyCode) {
+  function handlePlayerMove(keyCode) {
     switch (keyCode) {
       //LEFT
       case 37:
@@ -79,14 +79,11 @@ function startGame() {
   //LISTEN FOR A ARROW DOWN AND MAKE PLAYER MOVE
   document.addEventListener("keydown", (e) => {
     let playerMoves = e.keyCode;
-    handleMove(playerMoves);
+    handlePlayerMove(playerMoves);
   });
 
   // GENERATE MONSTERS
   generateRandomMonsters();
-
-  //GENERATE TEARS
-  generateTears();
 
   //UPDATE GAME
   updateGame();
@@ -97,10 +94,15 @@ function startGame() {
 
 //UPDATING BY DRAWING THE NEW STATES
 function updateGame() {
+  //update background to clear & score
   currentGame.drawBackground(ctx, canvasWidth, canvasHeight);
+  currentGame.displayScore(ctx);
+
+  // update player
   currentGame.player.drawComponent(ctx);
   currentGame.player.newPos();
 
+  // update monster
   currentGame.monsters.forEach((monster) => {
     if (currentPlayer.x !== monster.x && currentPlayer.y !== monster.y) {
       monster.drawComponent(ctx);
@@ -114,9 +116,11 @@ function updateGame() {
     generateRandomMonsters();
   }
 
-  currentGame.displayScore(ctx);
-
+  //update Tears
   currentGame.tears.forEach((tear) => tear.drawComponent(ctx));
+  currentGame.tears.forEach((tear) => tear.newPos(currentGame.tears));
+
+  //
 }
 
 //GENERATE RANDOM MONSTERS
@@ -176,6 +180,14 @@ function generateRandomMonsters() {
   }
 }
 
+//GENERATE TEARS
+
+document.addEventListener("keydown", (e) => {
+  if (e.keyCode === 32) {
+    return generateTears();
+  }
+});
+
 function generateTears() {
   let tear = new Tears(
     "/images/tear.png",
@@ -186,8 +198,4 @@ function generateTears() {
   );
 
   currentGame.tears.push(tear);
-
-  console.log(tear);
-  console.log(currentGame.tears);
-  //each time player press space bar, new tear is created
 }

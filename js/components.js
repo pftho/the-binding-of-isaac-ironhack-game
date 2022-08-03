@@ -94,24 +94,64 @@ export class Monster extends Component {
 export class Tears extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
-    this.speedX = 10; // controlling the speed on the x axis
-    this.speedY = 10; // controlling the speed on the y axis
   }
 
-  newPos() {
-    //console.log(this.x);
+  drawComponent(ctx, canvasWidth) {
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  }
+
+  newPos(arr) {
+    const rightBorder = 1000 - 25 - this.width;
+    const leftBorder = 25;
+    const topBorder = 25;
+    const bottomBorder = 600 - 25 - this.height;
+
+    console.log("x", this.x);
+    console.log("speed", this.speedX);
+
+    //MOVE HORIZONTALY
+
+
+// document.addEventListener("keydown", e => {
+
+// if(e.keyCode === 39){ 
+
+
+  
+// }
+
+// })
+
     if (
-      this.x + this.speedX < 1000 - 25 - this.width &&
-      this.x + this.speedX > 25
+      this.x + this.speedX < rightBorder &&
+      this.x + this.speedX > leftBorder
     ) {
+      this.speedX = -10;
       this.x += this.speedX;
     }
 
+    // Colision
     if (
-      this.y + this.speedY < 600 - 25 - this.height &&
-      this.y + this.speedY > 25
+      this.x + this.speedX > rightBorder ||
+      this.x + this.speedX < leftBorder
+    ) {
+    }
+
+    //MOVE VERTICALY
+
+    if (
+      this.y + this.speedY < bottomBorder &&
+      this.y + this.speedY > topBorder
     ) {
       this.y += this.speedY;
+    }
+
+    // Colision
+
+    if (
+      this.y + this.speedY > bottomBorder ||
+      this.y + this.speedY < topBorder
+    ) {
     }
   }
 }
