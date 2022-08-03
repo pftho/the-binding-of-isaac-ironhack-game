@@ -85,6 +85,9 @@ function startGame() {
   // GENERATE MONSTERS
   generateRandomMonsters();
 
+  //GENERATE TEARS
+  generateTears();
+
   //UPDATE GAME
   updateGame();
   setInterval(() => {
@@ -174,11 +177,17 @@ function generateRandomMonsters() {
 }
 
 function generateTears() {
-  const tearConfig = {
-    img: "/images/tear.png",
-    x: currentPlayer.x + x + 3,
-    y: currentPlayer.y + 3,
-    width: 10,
-    height: 10,
-  };
+  let tear = new Tears(
+    "/images/tear.png",
+    currentPlayer.x - 15,
+    currentPlayer.y + 10,
+    15,
+    20
+  );
+
+  currentGame.tears.push(tear);
+
+  console.log(tear);
+  console.log(currentGame.tears);
+  //each time player press space bar, new tear is created
 }
