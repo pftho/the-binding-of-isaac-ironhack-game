@@ -15,7 +15,7 @@ export class Player {
   }
 
   newPos() {
-    console.log(this.x);
+    //console.log(this.x);
     if (
       this.x + this.speedX < 1000 - 25 - this.width &&
       this.x + this.speedX > 25

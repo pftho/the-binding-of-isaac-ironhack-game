@@ -2,7 +2,7 @@ import { Player } from "./player.js";
 import { Monster } from "./monster.js";
 import { Game } from "./game.js";
 
-// DEFINE GAME
+// DECLARE GAME & PLAYER TO USE THE CLASSES
 let currentGame;
 let currentPlayer;
 
@@ -17,17 +17,15 @@ canvas.height = canvasHeight;
 const ctx = canvas.getContext("2d"); // Initialize context
 
 // LISTEN FOR START GAME BUTTON PRESS = FUNCTION START
-
 window.onload = () => {
-  // document.getElementById("start-button").onclick = () => {
-  startGame();
-  // };
+  //document.getElementById("start-button").onclick = () => {
+    startGame();
+ // };
 };
 
 // START FUNCTION TRIGGERED WHEN BUTTON PRESSED
-
 function startGame() {
-  // HIDE SPLASH & SHOW CANVAS DIV
+  // HIDE SPLASH & SHOW CANVAS 
   const gameIntro = document.querySelector(".game-intro");
   const gameGoal = document.querySelector(".goal");
   const canvasDiv = document.querySelector("#game-board");
@@ -35,67 +33,59 @@ function startGame() {
   gameGoal.style.display = "none";
   canvasDiv.style.display = "flex";
 
-  //DRAW BACKGROUND
-  drawBackground();
-
-  // INITITATE GAME, PLAYER
-  //init game
+  // INITITATE GAME & MUSIC
   currentGame = new Game();
+  //currentGame.playGameMusic();
 
-  // PLAYER
-  //init player
+  // INITIATE PLAYER
   currentPlayer = new Player("/images/isaac.png", 400, 350, 50, 50);
   currentGame.player = currentPlayer;
 
-  //make player move
 
-  // LISTEN FOR ARROW CLICK TO GET PLAYER TO MOVE
-
+  // DEFINE HOW PLAYER MOVES
   function handleMove(keyCode) {
     switch (keyCode) {
       //LEFT
       case 37:
         currentPlayer.speedX = -10;
-        console.log("speedX", currentPlayer.speedX);
+       // console.log("speedX", currentPlayer.speedX);
         break;
 
       //RIGHT
       case 39:
         currentPlayer.speedX = 10;
-        console.log("speedX", currentPlayer.speedX);
+       // console.log("speedX", currentPlayer.speedX);
         break;
 
       //UP
 
       case 38:
         currentPlayer.speedY = -10;
-        console.log("speedY", currentPlayer.speedY);
+       // console.log("speedY", currentPlayer.speedY);
         break;
 
       //DOWN
       case 40:
         currentPlayer.speedY = 10;
-        console.log("speedY", currentPlayer.speedY);
+      //  console.log("speedY", currentPlayer.speedY);
         break;
     }
   }
 
+  // SPEED GOES BACK TO 0 WHEN KEY UP
   document.addEventListener("keyup", (e) => {
-    // makes sure the speed goed back 0
     currentPlayer.speedX = 0;
     currentPlayer.speedY = 0;
   });
 
+  //LISTEN FOR A ARROW DOWN AND MAKE PLAYER MOVE
   document.addEventListener("keydown", (e) => {
     let playerMoves = e.keyCode;
     handleMove(playerMoves);
   });
 
-  // init monsters
+// GENERATE MONSTERS
   generateRandomMonsters();
-
-  //PLAY MUSIC
-  //playGameMusic();
 
   //UPDATE GAME
   updateGame();
@@ -104,35 +94,13 @@ function startGame() {
   }, 200);
 }
 
-//DRAWING UPDATED THINGS
+//UPDATING BY DRAWING THE NEW STATES 
 function updateGame() {
-  drawBackground();
+  currentGame.drawBackground(ctx, canvasWidth, canvasHeight);
   currentGame.player.drawPlayer(ctx);
   currentGame.player.newPos();
   currentGame.monsters.forEach((monster) => monster.drawMonster(ctx));
   currentGame.displayScore(ctx);
-}
-
-// GAME MUSIC
-function playGameMusic() {
-  const gameMusic = document.createElement("audio");
-  canvas.appendChild(gameMusic); // put canvas on the DOM
-  gameMusic.src = "/musics/The Binding of Isaac Afterbirth+ OST Delirium.mp3";
-  gameMusic.play();
-}
-
-// function stopMusic() {
-//   playGameMusic();
-//   gameMusic.stop();
-// }
-
-//BACKGROUND
-
-function drawBackground() {
-  //  display canvas background
-  const background = new Image();
-  background.src = "./images/basement.png";
-  ctx.drawImage(background, 0, 0, canvasWidth, canvasHeight);
 }
 
 //GENERATE RANDOM MONSTERS
