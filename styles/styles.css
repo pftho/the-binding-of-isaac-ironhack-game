@@ -10,6 +10,7 @@ body {
   margin: 0 auto;
   padding: 2rem;
   height: 500px;
+  width: 100vw;
 }
 
 .game-intro-text {
@@ -51,7 +52,7 @@ body {
   background-size: cover;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
 }
 
@@ -88,9 +89,11 @@ body {
   font-size: 5rem;
 }
 
-.endGame input {
+.endGame #score {
   background: transparent;
   border: none;
+  color: white;
+  font-size: 5rem;
 }
 
 .endGame div {

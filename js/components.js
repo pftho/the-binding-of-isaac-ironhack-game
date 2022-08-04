@@ -1,3 +1,5 @@
+// THIS FILE IMPLEMENTS COMPONENTS LOGIC
+
 export class Component {
   constructor(img, x, y, width, height) {
     this.image = new Image();
@@ -12,10 +14,10 @@ export class Component {
 
   drawComponent(ctx) {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    //ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 
   newPos() {
-    //console.log(this.x);
     if (
       this.x + this.speedX < 1000 - 25 - this.width &&
       this.x + this.speedX > 25
@@ -35,16 +37,14 @@ export class Component {
 export class Player extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
-    this.speedX = 5;
-    this.speedY = 5;
   }
 }
 
 export class Monster extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
-    const maxSpeed = 10;
-    const minSpeed = -10;
+    const maxSpeed = 5;
+    const minSpeed = -5;
     this.speedX = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); // controlling the speed on the x axis
     this.speedY = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); // controlling the speed on the y axis
   }
