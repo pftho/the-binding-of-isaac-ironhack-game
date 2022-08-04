@@ -6,8 +6,8 @@ export class Component {
     this.y = y;
     this.width = width;
     this.height = height;
-    this.speedX = 0; // controlling the speed on the x axis
-    this.speedY = 0; // controlling the speed on the y axis
+    this.speedX = 0;
+    this.speedY = 0;
   }
 
   drawComponent(ctx) {
@@ -35,7 +35,8 @@ export class Component {
 export class Player extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
-  
+    this.speedX = 5;
+    this.speedY = 5;
   }
 }
 

@@ -4,21 +4,28 @@ import { Game } from "./game.js";
 // DECLARE GAME & PLAYER TO USE THE CLASSES
 let currentGame;
 let currentPlayer;
+let startGameTime;
+
+//HIDING GAME OVER AND END GAME PAGES
+const gameOver = document.querySelector(".gameOver");
+const endGame = document.querySelector(".endGame");
+gameOver.style.display = "none";
+endGame.style.display = "none";
 
 //SET UP CANVAS AND APPEND TO THE DOM
 const canvasDiv = document.querySelector("#game-board");
 const canvas = document.createElement("canvas");
-canvasDiv.appendChild(canvas); // put canvas on the DOM
-const canvasWidth = 1000; // set size of canvas
+canvasDiv.appendChild(canvas);
+const canvasWidth = 1000;
 canvas.width = canvasWidth;
-const canvasHeight = 600; // set size of canvas
+const canvasHeight = 600;
 canvas.height = canvasHeight;
-const ctx = canvas.getContext("2d"); // Initialize context
+const ctx = canvas.getContext("2d");
 
 // LISTEN FOR START GAME BUTTON PRESS = FUNCTION START
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
-    startGame();
+  startGame();
   };
 };
 
@@ -32,9 +39,10 @@ function startGame() {
   gameGoal.style.display = "none";
   canvasDiv.style.display = "flex";
 
-  // INITITATE GAME & MUSIC
+  // INITITATE GAME, TIME & MUSIC
   currentGame = new Game();
   //currentGame.playGameMusic();
+  startGameTime = new Date();
 
   // INITIATE PLAYER
   currentPlayer = new Player("/images/isaac.png", 400, 350, 50, 50);
@@ -73,8 +81,7 @@ function startGame() {
 
   //LISTEN FOR A ARROW DOWN AND MAKE PLAYER MOVE
   document.addEventListener("keydown", (e) => {
-    let playerMoves = e.keyCode;
-    handlePlayerMove(playerMoves);
+    handlePlayerMove(e.keyCode);
   });
 
   // GENERATE MONSTERS
@@ -82,16 +89,19 @@ function startGame() {
 
   //UPDATE GAME
   updateGame();
-  let IntervalId = setInterval(() => {
+  setInterval(() => {
     updateGame();
   }, 200);
+
+  //UPDATE COUNTER
 }
 
 //UPDATING BY DRAWING THE NEW STATES
 function updateGame() {
-  //update background to clear & score
+  //update background to clear, keep track of time & score
   currentGame.drawBackground(ctx, canvasWidth, canvasHeight);
   currentGame.displayScore(ctx);
+  counter();
 
   // update player
   currentGame.player.newPos();
@@ -99,9 +109,7 @@ function updateGame() {
 
   // update monster
   currentGame.monsters.forEach((monster) => {
-    if (currentPlayer.x !== monster.x && currentPlayer.y !== monster.y) {
-      monster.drawComponent(ctx);
-    }
+    monster.drawComponent(ctx);
   });
   currentGame.monsters.forEach((monster) => {
     monster.newPos();
@@ -131,9 +139,7 @@ function updateGame() {
   currentGame.collisionPlayerMonsters(
     currentPlayer,
     currentGame.monsters,
-    ctx,
-    canvasWidth,
-    canvasHeight
+    canvasDiv
   ); //-> game over
 }
 
@@ -142,8 +148,16 @@ function updateGame() {
 function generateRandomMonsters() {
   const maxX = canvasWidth - 60 - 45;
   const minX = 45;
+
+  
   const maxY = canvasHeight - 60 - 45;
   const minY = 45;
+
+
+
+
+
+
 
   const monsterConfig = [
     {
@@ -234,4 +248,28 @@ function generateTears(x, y, speedX, speedY) {
   tear.speedX = speedX;
   tear.speedY = speedY;
   currentGame.tears.push(tear);
+}
+
+//COUNTER FOR GAME
+function counter() {
+  let timeFromStart = new Date().getSeconds() - startGameTime.getSeconds();
+  console.log("timeFromStart", timeFromStart);
+  if (timeFromStart > 0) {
+    ctx.font = "18px serif";
+    ctx.fillStyle = "red";
+    ctx.fillText(`counter: ${60 - timeFromStart}s left`, 600, 35);
+  }
+  if (counter <= 0) {
+    endGame.style.display = "flex";
+    canvasDiv.style.display = "none";
+
+    const playAgainBtn = document.querySelector(".play-again");
+    playAgainBtn.addEventListener("click", () => {
+      const gameIntro = document.querySelector(".game-intro");
+      const gameGoal = document.querySelector(".goal");
+      gameIntro.style.display = "flex";
+      gameGoal.style.display = "flex";
+      gameOver.style.display = "none";
+    });
+  }
 }

@@ -10,6 +10,7 @@ export class Game {
     this.winningBackground.src = "";
     this.gameOverBackground = new Image();
     this.gameOverBackground.src = "/images/gameOver.jpeg";
+
     //  this.gameMusic = new Audio(
     // "/musics/The Binding of Isaac Afterbirth+ OST Delirium.mp3"
     //   );
@@ -31,7 +32,7 @@ export class Game {
 
   collisionTearsMonsters(tearArr, monsterArr) {
     if (!this.tears.length) {
-      console.log("no tears");
+      return;
     }
 
     tearArr.forEach((tear) => {
@@ -50,7 +51,9 @@ export class Game {
     });
   }
 
-  collisionPlayerMonsters(player, monsterArr, ctx, canvasWidth, canvasHeight) {
+  //GAME OVER
+
+  collisionPlayerMonsters(player, monsterArr, canvasDiv) {
     monsterArr.forEach((monster) => {
       if (
         player.x < monster.x + monster.width &&
@@ -58,9 +61,32 @@ export class Game {
         player.y < monster.y + monster.height &&
         player.height + monster.y > monster.y
       ) {
-        ctx.drawImage(this.gameOverBackground, 0, 0, canvasWidth, canvasHeight);
-        ctx.fillText("Game Over", 185, 340);
-        ctx.fillStyle = "rgb(0,0,0)";
+        const gameOver = document.querySelector(".gameOver");
+        gameOver.style.display = "flex";
+        canvasDiv.style.display = "none";
+        console.log("collision", monster);
+        console.log("GAME OVERR");
+
+        //RESET GAME
+        this.player = {};
+        this.monsters = [];
+        this.tears = [];
+        this.score = 0;
+        this.background = new Image();
+        this.background.src = "./images/basement.png";
+        this.winningBackground = new Image();
+        this.winningBackground.src = "";
+        this.gameOverBackground = new Image();
+        this.gameOverBackground.src = "/images/gameOver.jpeg";
+
+        const playAgainBtn = document.querySelector(".play-again");
+        playAgainBtn.addEventListener("click", () => {
+          const gameIntro = document.querySelector(".game-intro");
+          const gameGoal = document.querySelector(".goal");
+          gameIntro.style.display = "flex";
+          gameGoal.style.display = "flex";
+          gameOver.style.display = "none";
+        });
       }
     });
   }
