@@ -2,26 +2,102 @@ body {
   font-size: 10px;
 }
 
+.game-intro {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("/images/binding-isaac.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+  padding: 2rem;
+  height: 500px;
+}
+
+.game-intro-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.game-intro p {
+  color: white;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  margin: 0 auto;
+}
+
+.goal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+#game-board {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background: black;
+  height: 100vh;
+}
+
+.gameOver {
+  background: url("/images/gameOver.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.gameOver div {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  margin: 5rem;
+  text-align: center;
+}
+
+.gameOver h2 {
+  color: red;
+  font-size: 5rem;
+}
+
+.endGame {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("/images/survived.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.endGame label {
+  color: white;
+  font-size: 5rem;
+}
+
+.endGame div {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  margin: 5rem;
+  text-align: center;
+}
 /* Extra small devices (phones, 600px and down) */
 
 @media only screen and (max-width: 600px) {
-  .game-intro {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-      url("/images/binding-isaac.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0 auto;
-    padding: 2rem;
-    height: 500px;
-  }
-  .game-intro-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
   audio {
     display: flex;
     margin: 4rem auto;
@@ -31,22 +107,6 @@ body {
     color: red;
     font-size: 3rem;
     margin: 2rem auto;
-  }
-
-  .game-intro p {
-    color: white;
-    font-size: 1.5rem;
-    line-height: 2.2rem;
-    margin: 0 auto;
-  }
-
-  .goal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem;
-    margin: 0 auto;
   }
 
   .goal p {
@@ -79,60 +139,18 @@ body {
     background-color: red;
     font-size: 1.5rem;
   }
-
-  #game-board {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    background: black;
-    height: 100vh;
-  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-  .game-intro {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-      url("/images/binding-isaac.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0 auto;
-    padding: 2rem;
-    height: 500px;
-  }
-
   audio {
     margin-bottom: 6rem;
-  }
-
-  .game-intro-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
   }
 
   .game-intro h1 {
     color: red;
     font-size: 5rem;
     margin: 2rem 0;
-  }
-
-  .game-intro p {
-    color: white;
-    font-size: 2rem;
-    line-height: 2.2rem;
-  }
-
-  .goal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem;
-    margin: 0 auto;
   }
 
   .goal p {
@@ -164,14 +182,5 @@ body {
     background-color: red;
     font-size: 1.5rem;
     margin-top: 3rem;
-  }
-
-  #game-board {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    background: black;
-    height: 100vh;
   }
 }

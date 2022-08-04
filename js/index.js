@@ -17,9 +17,9 @@ const ctx = canvas.getContext("2d"); // Initialize context
 
 // LISTEN FOR START GAME BUTTON PRESS = FUNCTION START
 window.onload = () => {
-  //document.getElementById("start-button").onclick = () => {
-  startGame();
-  // };
+  document.getElementById("start-button").onclick = () => {
+    startGame();
+  };
 };
 
 // START FUNCTION TRIGGERED WHEN BUTTON PRESSED
@@ -46,26 +46,21 @@ function startGame() {
       //LEFT
       case 37:
         currentPlayer.speedX = -10;
-        // console.log("speedX", currentPlayer.speedX);
         break;
 
       //RIGHT
       case 39:
         currentPlayer.speedX = 10;
-        // console.log("speedX", currentPlayer.speedX);
         break;
 
       //UP
-
       case 38:
         currentPlayer.speedY = -10;
-        // console.log("speedY", currentPlayer.speedY);
         break;
 
       //DOWN
       case 40:
         currentPlayer.speedY = 10;
-        //  console.log("speedY", currentPlayer.speedY);
         break;
     }
   }
@@ -87,7 +82,7 @@ function startGame() {
 
   //UPDATE GAME
   updateGame();
-  setInterval(() => {
+  let IntervalId = setInterval(() => {
     updateGame();
   }, 200);
 }
@@ -110,7 +105,11 @@ function updateGame() {
   });
   currentGame.monsters.forEach((monster) => {
     monster.newPos();
-  }); // newPos makes them move randomly
+  }); // newPos makes them move randomly because they speedX and speedY is random in the class
+
+  currentGame.monsters.forEach((monster) =>
+    monster.collisionWithBorder(currentGame.monsters)
+  );
 
   if (currentGame.monsters.length < 6) {
     generateRandomMonsters();
@@ -119,9 +118,23 @@ function updateGame() {
   //update Tears
   currentGame.tears.forEach((tear) => tear.drawComponent(ctx));
   currentGame.tears.forEach((tear) => tear.newPos(ctx));
+  currentGame.tears.forEach((tear) =>
+    tear.collisionWithBorder(currentGame.tears)
+  );
 
-  // check for collision tears vs monsters
-  collisionTearsMonsters(currentGame.tears, currentGame.monsters);
+  // Check for collision
+  currentGame.collisionTearsMonsters(
+    currentGame.tears,
+    currentGame.monsters,
+    ctx
+  ); //-> increase score
+  currentGame.collisionPlayerMonsters(
+    currentPlayer,
+    currentGame.monsters,
+    ctx,
+    canvasWidth,
+    canvasHeight
+  ); //-> game over
 }
 
 //GENERATE RANDOM MONSTERS
@@ -180,12 +193,6 @@ function generateRandomMonsters() {
 }
 
 //GENERATE TEARS AND HOW THEY MOVE
-
-// document.addEventListener("keydown", (e) => {
-//   if (e.keyCode === 32) {
-//     return generateTears();
-//   }
-// });
 document.addEventListener("keydown", (e) => handleTearMove(e.keyCode));
 
 function handleTearMove(keyCode) {
@@ -228,30 +235,3 @@ function generateTears(x, y, speedX, speedY) {
   tear.speedY = speedY;
   currentGame.tears.push(tear);
 }
-
-//COLLISION TEAR VS MONSTER  -> score increase
-// we need to compare every monster position with every tear position
-
-function collisionTearsMonsters(tearArr, monsterArr) {
-  if (!currentGame.tears.length) {
-    console.log("no tears");
-  }
-
-  tearArr.forEach((tear) => {
-    monsterArr.forEach((monster) => {
-      if (
-        tear.x < monster.x + monster.width &&
-        tear.x + tear.width > monster.x &&
-        tear.y < monster.y + monster.height &&
-        tear.height + monster.y > monster.y
-      ) {
-        monsterArr.splice(monsterArr.indexOf(monster), 1);
-        tearArr.splice(tearArr.indexOf(tear), 1);
-        currentGame.score++
-      }
-    });
-  });
-}
-
-//COLLISION ISAAC VS MONSTER -> game over
-// we need to compare every monster position with Isaac position

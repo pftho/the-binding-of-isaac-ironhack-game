@@ -28,7 +28,7 @@
     <section class="goal">
       <p>Beware, if one monster touches you, you are dead</p>
       <p>
-        Kill the highest number of monster in 2 minutes if you want to survive
+        Kill the highest number of monster in 1 minute if you want to survive
       </p>
 
       <div class="controllers">
@@ -43,6 +43,37 @@
     </section>
 
     <div id="game-board"></div>
+
+    <section class="gameOver">
+      <div>
+        <h2>Game Over</h2>
+        <button>Try Again</button>
+        <!-- <audio
+          class="music"
+          controls
+          autoplay
+          src="/musics/The Binding of Isaac Repentance OST - Title Theme 10 Minutes.mp3"
+          type="audio/mpeg"
+        ></audio>
+      </div> -->
+    </section>
+
+    <section class="endGame">
+      <div> 
+        <div> 
+      <label for="score">You survived and killed</label>
+      <input type="number" id="score" name="score"> 
+    </div>
+      <button>Play Again</button>
+      <audio
+        class="music"
+        controls
+        autoplay
+        src="/musics/The Binding of Isaac Repentance OST - Title Theme 10 Minutes.mp3"
+        type="audio/mpeg"
+      ></audio>
+    </div>
+    </section>
 
     <script type="module" src="js/game.js"></script>
     <script type="module" src="js/components.js"></script>

@@ -8,8 +8,6 @@ export class Component {
     this.height = height;
     this.speedX = 0; // controlling the speed on the x axis
     this.speedY = 0; // controlling the speed on the y axis
-    this.health = 1;
-    this.damage = 1;
   }
 
   drawComponent(ctx) {
@@ -37,7 +35,7 @@ export class Component {
 export class Player extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
-    this.damage = 0;
+  
   }
 }
 
@@ -50,31 +48,31 @@ export class Monster extends Component {
     this.speedY = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); // controlling the speed on the y axis
   }
 
-  newPos() {
-    super.newPos() //calling what expists in component
+  collisionWithBorder(monsterArr) {
     const rightBorder = 1000 - 25 - this.width;
     const leftBorder = 25;
     const topBorder = 25;
     const bottomBorder = 600 - 25 - this.height;
 
-    // Collision
-    if (
-      this.x + this.speedX > rightBorder ||
-      this.x + this.speedX < leftBorder
-    ) {
-      this.speedX = -this.speedX;
-      this.x += this.speedX;
-    }
+    monsterArr.forEach((monster) => {
+      if (
+        this.x + this.speedX > rightBorder ||
+        this.x + this.speedX < leftBorder
+      ) {
+        this.speedX = -this.speedX;
+        this.x += this.speedX;
+      }
 
-    // Collision
+      // Collision
 
-    if (
-      this.y + this.speedY > bottomBorder ||
-      this.y + this.speedY < topBorder
-    ) {
-      this.speedY = -this.speedY;
-      this.y += this.speedY;
-    }
+      if (
+        this.y + this.speedY > bottomBorder ||
+        this.y + this.speedY < topBorder
+      ) {
+        this.speedY = -this.speedY;
+        this.y += this.speedY;
+      }
+    });
   }
 }
 
@@ -87,30 +85,28 @@ export class Tears extends Component {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
-  newPos(ctx) {
-    super.newPos();
+  collisionWithBorder(tearArr) {
     const rightBorder = 1000 - 25 - this.width;
     const leftBorder = 25;
     const topBorder = 25;
     const bottomBorder = 600 - 25 - this.height;
 
-  
+    tearArr.forEach((tear) => {
+      if (
+        this.x + this.speedX > rightBorder ||
+        this.x + this.speedX < leftBorder
+      ) {
+        tearArr.splice(tearArr.indexOf(tear), 1);
+      }
 
-    // Collision
-    if (
-      this.x + this.speedX > rightBorder ||
-      this.x + this.speedX < leftBorder
-    ) {
-      ctx.clearRect(this.x, this.y, this.width, this.height);
-    }
+      // Collision
 
-    // Collision
-
-    if (
-      this.y + this.speedY > bottomBorder ||
-      this.y + this.speedY < topBorder
-    ) {
-      ctx.clearRect(this.x, this.y + this.speedY, this.width, this.height);
-    }
+      if (
+        this.y + this.speedY > bottomBorder ||
+        this.y + this.speedY < topBorder
+      ) {
+        tearArr.splice(tearArr.indexOf(tear), 1);
+      }
+    });
   }
 }
