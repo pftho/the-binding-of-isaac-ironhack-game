@@ -74,7 +74,7 @@ function startGame() {
     );
   }
 
-  // INITITATE GAME, TIME
+  // INITITATE GAME
   const game = new Game(canvas, onGameEnded, onGameOver);
 
   // PLAYER
@@ -165,5 +165,5 @@ function startGame() {
   //Trigger the tears when keydown
   document.addEventListener("keydown", (e) => handleTearMove(e.keyCode));
 
-  game.start();
+  game.startLoop();
 }

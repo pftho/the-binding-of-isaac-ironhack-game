@@ -10,19 +10,13 @@ export class Game {
     this.score = 0;
     this.background = new Image();
     this.background.src = "./images/basement.png";
-    this.winningBackground = new Image();
-    this.winningBackground.src = "";
-    this.gameOverBackground = new Image();
-    this.gameOverBackground.src = "/images/gameOver.jpeg";
-
     this.onGameEnded = onGameEnded;
     this.onGameOver = onGameOver;
-
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
   }
 
-  start() {
+  startLoop() {
     this.startGameTime = new Date();
     //UPDATE GAME
     this.update();
@@ -124,7 +118,7 @@ export class Game {
     });
   }
 
-  // COUNTER -> WILL DETERMINE IF WIN 
+  // COUNTER -> WILL DETERMINE IF WIN
   counter() {
     const timeFromStart = Math.ceil(
       (new Date().getTime() - this.startGameTime.getTime()) / 1000
