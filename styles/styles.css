@@ -4,7 +4,7 @@ body {
 
 .game-intro {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/binding-isaac.jpeg");
+    url("../images/binding-isaac.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0 auto;
@@ -74,7 +74,7 @@ body {
 
 .endGame {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/survived.jpeg");
+    url("../images/survived.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;

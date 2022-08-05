@@ -79,7 +79,7 @@ function startGame() {
 
   // PLAYER
   // Init Player and assign the to game
-  const currentPlayer = new Player("/images/isaac.png", 400, 350, 50, 50);
+  const currentPlayer = new Player("images/isaac.png", 400, 350, 50, 50);
   game.player = currentPlayer;
 
   // Define : arrow keys & speed
