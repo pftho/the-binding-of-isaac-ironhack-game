@@ -136,9 +136,11 @@ TASK
 
 LINKS
 Git
-URls for the project repo and deploy 
+URls for the project repo and deploy:
+https://github.com/pftho/the-binding-of-isaac-ironhack-game
 
 Slides
-URls for the project presentation (slides)
+URls for the project presentation (slides) : 
+https://docs.google.com/presentation/d/1fMq3c-SFzMUU-XXFHopuI6aACKGAO7C4TaA7_kzzk54/edit?usp=sharing
 
 
