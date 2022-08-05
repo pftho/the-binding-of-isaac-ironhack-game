@@ -48,7 +48,7 @@ function startGame() {
     const scoreSpan = document.querySelector(".endGame #score");
     scoreSpan.innerHTML = `${score} monsters`;
 
-    //CONNECT THINGS FOR GAME TO RESTART ONCE (if not once causing a bug)
+    //CONNECT THINGS FOR GAME TO RESTART ONCE: if not eventlistener keep stacking on the button and start multiple time the game
     const playAgainBtn = document.querySelector(".endGame .play-again");
     playAgainBtn.addEventListener(
       "click",
@@ -68,7 +68,7 @@ function startGame() {
     playAgainBtn.addEventListener(
       "click",
       () => {
-        startGame();
+        startGame(); // startGame initialise things, so it works as a reset 
       },
       { once: true }
     );

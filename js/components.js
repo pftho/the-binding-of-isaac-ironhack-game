@@ -16,6 +16,8 @@ export class Component {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
+  // if component is withing range we increase position with speed, as a result character moves
+  // speed is controlled by eventlistener on the dom (index.js)
   newPos() {
     if (
       this.x + this.speedX < 1000 - 25 - this.width &&
@@ -42,12 +44,15 @@ export class Player extends Component {
 export class Monster extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
-    const maxSpeed = 5;
+    //speed range  for monsters
+    const maxSpeed = 5; 
     const minSpeed = -5;
-    this.speedX = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); // controlling the speed on the x axis
-    this.speedY = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); // controlling the speed on the y axis
+    // random speed for the monster within range
+    this.speedX = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); 
+    this.speedY = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); 
   }
 
+  // if current position + next position = collision we revert speed so they go the other way
   collisionWithBorder(monsterArr) {
     const rightBorder = 1000 - 25 - this.width;
     const leftBorder = 25;
@@ -81,9 +86,13 @@ export class Tears extends Component {
     super(img, x, y, width, height);
   }
 
+  // probablu could delete canvasWidth as argument -> due to refactor
   drawComponent(ctx, canvasWidth) {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
+
+  // if current position + next position = collision, we delete from the array so they disapear
+
 
   collisionWithBorder(tearArr) {
     const rightBorder = 1000 - 25 - this.width;

@@ -10,9 +10,9 @@ export class Game {
     this.score = 0;
     this.background = new Image();
     this.background.src = "./images/basement.png";
-    this.onGameEnded = onGameEnded;
-    this.onGameOver = onGameOver;
-    this.canvas = canvas;
+    this.onGameEnded = onGameEnded; // function from the index because DOM manipulation
+    this.onGameOver = onGameOver; // function from the index because DOM manipulation
+    this.canvas = canvas; //Canvas interacts with DOM so we need to get it from Index
     this.ctx = this.canvas.getContext("2d");
   }
 
@@ -22,7 +22,7 @@ export class Game {
     this.update();
     this.intervalID = setInterval(() => {
       this.update();
-    }, 100);
+    }, 32);
   }
 
   stop() {
@@ -112,7 +112,7 @@ export class Game {
         this.player.height + this.player.y > monster.y
       ) {
         this.stop();
-        this.onGameOver();
+        this.onGameOver();  // dom interaction so -> index.js We can access it because when we initiate the game on the index, we pass the function as an argument
         console.log("game over", this.startGameTime);
       }
     });
@@ -132,7 +132,7 @@ export class Game {
 
     if (timeFromStart > 60) {
       this.stop();
-      this.onGameEnded(this.score);
+      this.onGameEnded(this.score); // dom interaction so -> index.js We can access it because when we initiate the game on the index, we pass the function as an argument
     }
   }
 
