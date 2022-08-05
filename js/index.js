@@ -121,7 +121,7 @@ function startGame() {
   // Init tears
 
   function generateTears(x, y, speedX, speedY) {
-    let tear = new Tears("/images/tear.png", x, y, 15, 20);
+    let tear = new Tears("images/tear.png", x, y, 15, 20);
     tear.speedX = speedX;
     tear.speedY = speedY;
     game.tears.push(tear);
