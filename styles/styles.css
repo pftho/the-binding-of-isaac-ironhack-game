@@ -84,9 +84,12 @@ body {
   height: 100vh;
 }
 
-.endGame label {
+.endGame h2,
+.endGame h3,
+.endGame #ls-score-game-ended-p,
+.endGame #ls-score-game-ended-span {
   color: white;
-  font-size: 5rem;
+  font-size: 3rem;
 }
 
 .endGame #score {

@@ -17,7 +17,6 @@
         src="./musics/The Binding of Isaac Rebirth OST - Death theme.mp3"
         type="audio/mpeg"
       ></audio>
-
       <div class="game-intro-text">
         <h1>The bind() of this.hack</h1>
         <p>Mom tried to kill you and you hid in the basement.</p>
@@ -59,20 +58,16 @@
     </section>
 
     <section class="endGame">
-      <div> 
-        <div> 
-      <label for="score">You survived and killed</label>
-      <span id="score"> 
-    </div>
-      <button class="play-again">Play Again</button>
-      <!-- <audio
-        class="music"
-        controls
-        autoplay
-        src="/musics/The Binding of Isaac Repentance OST - Title Theme 10 Minutes.mp3"
-        type="audio/mpeg"
-      ></audio> -->
-    </div>
+      <div>
+        <div>
+          <h2 for="score">You survived and killed</h2>
+          <span id="score"> </span>
+          <p id="ls-score-game-ended-p">Your best score is</p>
+          <span id="ls-score-game-ended-span"></span>
+        </div>
+
+        <button class="play-again">Play Again</button>
+      </div>
     </section>
 
     <script type="module" src="js/game.js"></script>

@@ -68,71 +68,75 @@ components.js -> file implements components logic
   collisionWithBorder(){}
 
 game.js -> file implements game logic
+
 - Game(){
-this.canvas
-this.ctx
-this.player
-this.monsters
-this.tears
-this.score
-this.background
-this.onGameEnded
-this.onGameOver
-}
-start(){
-    this.startGameTime
-    this.update()
-    this.intervalID
-}
-stop(){}
-update(){}
-collisionTearsMonsters(){}
-collisionPlayerMonster(){}
-counter(){}
-generateRandomMonster(){}
+  this.canvas
+  this.ctx
+  this.player
+  this.monsters
+  this.tears
+  this.score
+  this.background
+  this.onGameEnded
+  this.onGameOver
+  }
+  start(){
+  this.startGameTime
+  this.update()
+  this.intervalID
+  }
+  stop(){}
+  update(){}
+  collisionTearsMonsters(){}
+  collisionPlayerMonster(){}
+  counter(){}
+  generateRandomMonster(){}
 
 STATES Y STATES TRANSITIONS
+
 - splashScreen
 - gameScreen
 - gameOverScreen
 - gameEndedScreen
 
 TASK
+
 - Index - build DOM
 - Index - build SplashScreen, GameScreen, gameOverScreen & gameEndedScreen
-- Index - hide GameScreen, gameOverScreen & gameEndedScreen 
+- Index - hide GameScreen, gameOverScreen & gameEndedScreen
 - Index - build Canvas within GameScreen
 - Index - addEvenListener for startGame
-- Index - startGame 
+- Index - startGame
 - Index (startGame(){}) - hide SplashScreen
 - Index (startGame(){}) - display GameScreen
 - Index (startGame(){}) - initiate Game
 - Index (startGame(){}) - initiate Player
 - Index (startGame(){}) - addEvenListener for player move
 - Index (startGame(){}) - addEvenListener for player shoot
+- Index (startGame(){}) - Game - startLoop
 - Game - startLoop
 - Game - updateCanvas
 - Game - startGameTime
-- Game - counter 
-    -> if timeFromStart > 60 :
-        ->  Game - stop
-        ->  Game - onGameEnded 
+- Game - counter
+  -> if timeFromStart > 60 :
+  -> Game - stop
+  -> Game - onGameEnded(){}
+  -> onGameEnded(){} - storeBestScore(){}
 - Game - displayScore
 - Game - drawBackgournd
-- Game - generateRandomMonster 
+- Game - generateRandomMonster
 - Player - draw
-- Player - move 
+- Player - move
 - Monster - draw
 - Monster - move
 - Monster - collisionWithBorder
 - Tears - draw
 - Tears - move
 - Tears - collisionWithBorder
-- Game - check collisionTearsMonsters 
-- Game - check collisionPlayerMonsters 
-    ->  Game - stop
-    ->  Game- onGameOver 
-
+- Game - check collisionTearsMonsters
+- Game - check collisionPlayerMonsters
+  -> Game - stop
+  -> Game- onGameOver
 
 LINKS
 Git
@@ -140,7 +144,5 @@ URls for the project repo and deploy:
 https://github.com/pftho/the-binding-of-isaac-ironhack-game
 
 Slides
-URls for the project presentation (slides) : 
+URls for the project presentation (slides) :
 https://docs.google.com/presentation/d/1fMq3c-SFzMUU-XXFHopuI6aACKGAO7C4TaA7_kzzk54/edit?usp=sharing
-
-

@@ -18,6 +18,24 @@ canvas.width = canvasWidth;
 const canvasHeight = 600;
 canvas.height = canvasHeight;
 
+//CREATE LOCAL STORAGE
+
+function storeBestScore(score) {
+  const lsScoreEndSpan = document.querySelector("#ls-score-game-ended-span");
+
+  if (localStorage.length === 1) {
+    window.localStorage.heightScore = window.localStorage.currentScore;
+    lsScoreEndSpan.innerHTML = window.localStorage.heightScore;
+    console.log(window.localStorage);
+  } else if (
+    parseInt(localStorage.getItem("currentScore")) >=
+    parseInt(localStorage.getItem("heightScore"))
+  ) {
+    window.localStorage.heightScore = window.localStorage.currentScore;
+    lsScoreEndSpan.innerHTML = window.localStorage.heightScore;
+  }
+}
+
 // LISTEN FOR START GAME BUTTON PRESS = FUNCTION START
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
@@ -47,6 +65,11 @@ function startGame() {
     canvasDiv.style.display = "none";
     const scoreSpan = document.querySelector(".endGame #score");
     scoreSpan.innerHTML = `${score} monsters`;
+    window.localStorage.currentScore = score;
+
+    console.log(window.localStorage);
+
+    storeBestScore(score);
 
     //CONNECT THINGS FOR GAME TO RESTART ONCE: if not eventlistener keep stacking on the button and start multiple time the game
     const playAgainBtn = document.querySelector(".endGame .play-again");
@@ -68,7 +91,7 @@ function startGame() {
     playAgainBtn.addEventListener(
       "click",
       () => {
-        startGame(); // startGame initialise things, so it works as a reset 
+        startGame(); // startGame initialise things, so it works as a reset
       },
       { once: true }
     );
