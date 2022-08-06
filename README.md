@@ -36,7 +36,6 @@ BACKLOG
 
 - Fix bugs (tears not always leaving the screen when collision with border / Monster can occasionnaly flash due to canvas reset issues)
 - Add music effects
-- Add log of scores
 - Add health for the player and monsters
 - Add items that give bonus / malus
 - Give the option to choose female player

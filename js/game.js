@@ -27,7 +27,7 @@ export class Game {
 
   stop() {
     clearInterval(this.intervalID);
-    
+
   }
 
   update() {
@@ -131,7 +131,7 @@ export class Game {
       this.ctx.fillText(`Timer: ${60 - timeFromStart}s left`, 600, 35);
     }
 
-    if (timeFromStart > 30) {
+    if (timeFromStart > 60) {
       this.stop();
       this.onGameEnded(this.score); // dom interaction so -> index.js We can access it because when we initiate the game on the index, we pass the function as an argument
     }

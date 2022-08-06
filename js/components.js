@@ -45,11 +45,11 @@ export class Monster extends Component {
   constructor(img, x, y, width, height) {
     super(img, x, y, width, height);
     //speed range  for monsters
-    const maxSpeed = 5; 
+    const maxSpeed = 5;
     const minSpeed = -5;
     // random speed for the monster within range
-    this.speedX = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); 
-    this.speedY = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed); 
+    this.speedX = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed);
+    this.speedY = Math.floor(Math.random() * (maxSpeed - minSpeed) + minSpeed);
   }
 
   // if current position + next position = collision we revert speed so they go the other way
@@ -86,13 +86,11 @@ export class Tears extends Component {
     super(img, x, y, width, height);
   }
 
-  // probablu could delete canvasWidth as argument -> due to refactor
-  drawComponent(ctx, canvasWidth) {
+  drawComponent(ctx) {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
   // if current position + next position = collision, we delete from the array so they disapear
-
 
   collisionWithBorder(tearArr) {
     const rightBorder = 1000 - 25 - this.width;
